@@ -17,10 +17,13 @@ namespace BigRedCloud.Api.Samples.SalesInvoice
         protected const int CustomersMinCount = 5;
         protected const int ProductsMinCount = 5;
         protected const int SalesInvoicesCountToCreate = 7;
-        protected readonly DateTime SalesInvoiceEntryDate = new DateTime(2014, 8, 1);
+        protected readonly DateTime SalesInvoiceEntryDate;
         protected const string OdataDateFormat = "yyyy-MM-dd";
 
-        protected SalesInvoiceBaseSample(StreamWriter tracer) : base(tracer) { }
+        protected SalesInvoiceBaseSample(DateTime financialYearStart, StreamWriter tracer) : base(tracer)
+        {
+            SalesInvoiceEntryDate = financialYearStart.AddMonths(3);
+        }
 
         /// <summary>
         /// Prepares environment to run sample: checks existing of necessary entities. If possible, missed entities will be created. Otherwise, error will be raised.

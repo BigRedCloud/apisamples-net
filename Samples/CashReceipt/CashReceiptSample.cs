@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace BigRedCloud.Api.Samples.CashReceipt
 {
@@ -7,10 +8,11 @@ namespace BigRedCloud.Api.Samples.CashReceipt
         private readonly CashReceiptPositiveSample _positiveSample;
         private readonly CashReceiptNegativeSample _negativeSample;
 
-        public CashReceiptSample(StreamWriter tracer) : base(tracer)
+        public CashReceiptSample(DateTime financialYearStart, StreamWriter tracer)
+            : base(financialYearStart, tracer)
         {
-            _positiveSample = new CashReceiptPositiveSample(tracer);
-            _negativeSample = new CashReceiptNegativeSample(tracer);
+            _positiveSample = new CashReceiptPositiveSample(financialYearStart, tracer);
+            _negativeSample = new CashReceiptNegativeSample(financialYearStart, tracer);
         }
 
         public void RunSample()

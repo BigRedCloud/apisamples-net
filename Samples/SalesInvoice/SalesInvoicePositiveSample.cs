@@ -12,7 +12,7 @@ namespace BigRedCloud.Api.Samples.SalesInvoice
 {
     internal class SalesInvoicePositiveSample : SalesInvoiceBaseSample
     {
-        public SalesInvoicePositiveSample(StreamWriter tracer) : base(tracer) { }
+        public SalesInvoicePositiveSample(DateTime financialYearStart, StreamWriter tracer) : base(financialYearStart, tracer) { }
 
         public void RunSample()
         {
@@ -53,7 +53,7 @@ namespace BigRedCloud.Api.Samples.SalesInvoice
         private void CreateSalesInvoicesBatch()
         {
             Func<int, SalesInvoiceCreditNoteDto> salesInvoiceGenerator = GetSalesInvoiceGeneratorForBatchCreation();
-            BatchItemProcessResult[] batchResult = CreateItems(SalesInvoicesCountToCreate, salesInvoiceGenerator, ApiClientProvider.Default.SalesInvoices.ProcessBatch);
+            BatchItemProcessResult<SalesInvoiceCreditNoteDto>[] batchResult = CreateItems(SalesInvoicesCountToCreate, salesInvoiceGenerator, ApiClientProvider.Default.SalesInvoices.ProcessBatch);
 
             Tracer.WriteLine("Batch of {0} Sales Invoices were created. Ids of created items: {1}.",
                 SalesInvoicesCountToCreate,
@@ -157,7 +157,7 @@ namespace BigRedCloud.Api.Samples.SalesInvoice
             }
 
             // Execute batch operation.
-            BatchItemProcessResult[] batchResult = ProcessBatch(batchSalesInvoices.ToArray(), ApiClientProvider.Default.SalesInvoices.ProcessBatch);
+            BatchItemProcessResult<SalesInvoiceCreditNoteDto>[] batchResult = ProcessBatch(batchSalesInvoices.ToArray(), ApiClientProvider.Default.SalesInvoices.ProcessBatch);
 
             // Display batch results.
             Tracer.WriteLine("Batch of Sales Invoices was processed:");

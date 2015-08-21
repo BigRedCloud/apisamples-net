@@ -1,4 +1,5 @@
-﻿using BigRedCloud.Api.Model;
+﻿using System;
+using BigRedCloud.Api.Model;
 using BigRedCloud.Api.Model.Batch;
 using BigRedCloud.Api.Model.Querying;
 using BigRedCloud.Api.Samples.Components;
@@ -9,7 +10,7 @@ namespace BigRedCloud.Api.Samples.SalesInvoice
 {
     internal class SalesInvoiceNegativeSample : SalesInvoiceBaseSample
     {
-        public SalesInvoiceNegativeSample(StreamWriter tracer) : base(tracer) { }
+        public SalesInvoiceNegativeSample(DateTime financialYearStart, StreamWriter tracer) : base(financialYearStart, tracer) { }
 
         public void RunSample()
         {
@@ -53,7 +54,7 @@ namespace BigRedCloud.Api.Samples.SalesInvoice
             batchSalesInvoices[batchSalesInvoices.Length - 1].item.total = 123;
 
             // Execute batch operation.
-            BatchItemProcessResult[] batchResult = ApiClientProvider.Default.SalesInvoices.ProcessBatch(batchSalesInvoices);
+            BatchItemProcessResult<SalesInvoiceCreditNoteDto>[] batchResult = ApiClientProvider.Default.SalesInvoices.ProcessBatch(batchSalesInvoices);
 
             // Display batch results.
             PrintBatchResult(batchResult, "Sales Invoice");

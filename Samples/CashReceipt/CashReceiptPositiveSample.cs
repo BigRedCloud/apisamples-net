@@ -12,7 +12,7 @@ namespace BigRedCloud.Api.Samples.CashReceipt
 {
     internal class CashReceiptPositiveSample : CashReceiptBaseSample
     {
-        public CashReceiptPositiveSample(StreamWriter tracer) : base(tracer) { }
+        public CashReceiptPositiveSample(DateTime financialYearStart, StreamWriter tracer) : base(financialYearStart, tracer) { }
 
         public void RunSample()
         {
@@ -57,7 +57,7 @@ namespace BigRedCloud.Api.Samples.CashReceipt
         private void CreateCashReceiptsBatch()
         {
             Func<int, CashReceiptDto> cashReceiptGenerator = GetCashReceiptGeneratorForBatchCreation();
-            BatchItemProcessResult[] batchResult = CreateItems(CashReceiptsCountToCreate, cashReceiptGenerator, ApiClientProvider.Default.CashReceipts.ProcessBatch);
+            BatchItemProcessResult<CashReceiptDto>[] batchResult = CreateItems(CashReceiptsCountToCreate, cashReceiptGenerator, ApiClientProvider.Default.CashReceipts.ProcessBatch);
 
             Tracer.WriteLine("Batch of {0} Cash Receipts were created. Ids of created items: {1}.",
                 CashReceiptsCountToCreate,
@@ -164,7 +164,7 @@ namespace BigRedCloud.Api.Samples.CashReceipt
             }
 
             // Execute batch operation.
-            BatchItemProcessResult[] batchResult = ProcessBatch(batchCashReceipts.ToArray(), ApiClientProvider.Default.CashReceipts.ProcessBatch);
+            BatchItemProcessResult<CashReceiptDto>[] batchResult = ProcessBatch(batchCashReceipts.ToArray(), ApiClientProvider.Default.CashReceipts.ProcessBatch);
 
             // Display batch results.
             Tracer.WriteLine("Batch of Cash Receipts was processed:");

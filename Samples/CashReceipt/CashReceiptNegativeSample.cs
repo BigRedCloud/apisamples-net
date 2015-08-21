@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using BigRedCloud.Api.Model;
 using BigRedCloud.Api.Model.Batch;
 using BigRedCloud.Api.Model.Querying;
@@ -9,7 +10,7 @@ namespace BigRedCloud.Api.Samples.CashReceipt
 {
     internal class CashReceiptNegativeSample : CashReceiptBaseSample
     {
-        public CashReceiptNegativeSample(StreamWriter tracer) : base(tracer) { }
+        public CashReceiptNegativeSample(DateTime financialYearStart, StreamWriter tracer) : base(financialYearStart, tracer) { }
 
         public void RunSample()
         {
@@ -53,7 +54,7 @@ namespace BigRedCloud.Api.Samples.CashReceipt
             batchCashReceipts[batchCashReceipts.Length - 1].item.total = 123;
 
             // Execute batch operation.
-            BatchItemProcessResult[] batchResult = ApiClientProvider.Default.CashReceipts.ProcessBatch(batchCashReceipts);
+            BatchItemProcessResult<CashReceiptDto>[] batchResult = ApiClientProvider.Default.CashReceipts.ProcessBatch(batchCashReceipts);
 
             // Display batch results.
             PrintBatchResult(batchResult, "Cash Receipt");

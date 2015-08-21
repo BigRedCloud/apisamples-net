@@ -20,7 +20,7 @@ namespace BigRedCloud.Api.Samples.Components
                 totalVAT = 12.5m,
                 loType = "1",
                 vatTypeId = parameters.VatTypeId,
-                deliveryTo = new NoteDto[] { new NoteDto { body = "dt_1" }, new NoteDto { body = "dt_2" } },
+                deliveryTo = new[] { "dt_1", "dt_2" },
                 productTrans = new ProductTranDto[]
                 {
                     new ProductTranDto
@@ -29,7 +29,7 @@ namespace BigRedCloud.Api.Samples.Components
                         quantity = 3,
                         vatRateId = parameters.VatRates[15].id,
                         productId = parameters.ProductId,
-                        tranNotes = new NoteDto[] { new NoteDto { body = "tn_1_1" }, new NoteDto { body = "tn_1_2" } },
+                        tranNotes = new[] { "tn_1_1", "tn_1_2" },
                         acEntries = new AcEntryDto[] 
                         {
                             new AcEntryDto
@@ -51,7 +51,7 @@ namespace BigRedCloud.Api.Samples.Components
                         unitPrice = 20,
                         quantity = 2,
                         vatRateId = parameters.VatRates[20].id,
-                        tranNotes = new NoteDto[] { new NoteDto { body = "tn_2_1" }, new NoteDto { body = "tn_2_2" } },
+                        tranNotes = new[] { "tn_2_1", "tn_2_2" },
                         acEntries = new AcEntryDto[]
                         {
                             new AcEntryDto
@@ -87,7 +87,7 @@ namespace BigRedCloud.Api.Samples.Components
                 entryDate = parameters.EntryDate,
                 note = "note_1",
                 total = 50,
-                detailCollection = new NoteDto[] { new NoteDto { body = "det_1" }, new NoteDto { body = "det_2" } },
+                detailCollection = new[] { "det_1", "det_2" },
                 customFields = new UserDefinedFieldValueDto[]
                 {
                     new UserDefinedFieldValueDto
@@ -153,8 +153,8 @@ namespace BigRedCloud.Api.Samples.Components
                     branch = "branch",
                     sortCode = "sc"
                 },
-                address = new NoteDto[] { new NoteDto { body = "a_1" }, new NoteDto { body = "a_2" }, new NoteDto { body = "a_3" } },
-                delivery = new NoteDto[] { new NoteDto { body = "del_1" }, new NoteDto { body = "del_2" }, new NoteDto { body = "del_3" } }
+                address = new[] { "a_1", "a_2", "a_3" },
+                delivery = new[] { "del_1", "del_2", "del_3" }
             };
         }
 
@@ -164,7 +164,7 @@ namespace BigRedCloud.Api.Samples.Components
             {
                 stockCode = Utils.GenerateRandomString(8),
                 unitPrice = 10,
-                details = new NoteDto[] { new NoteDto { body = "det_1" }, new NoteDto { body = "det_2" }, new NoteDto { body = "det_3" } }
+                details = new[] { "det_1", "det_2", "det_3" }
             };
         }
     }

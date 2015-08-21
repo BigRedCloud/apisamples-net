@@ -14,10 +14,13 @@ namespace BigRedCloud.Api.Samples.CashReceipt
         protected const int UserDefinedFieldsMinCount = 2;
         protected const int CustomersMinCount = 5;
         protected const int CashReceiptsCountToCreate = 7;
-        protected readonly DateTime CashReceiptEntryDate = new DateTime(2014, 8, 1);
+        protected readonly DateTime CashReceiptEntryDate;
         protected const string OdataDateFormat = "yyyy-MM-dd";
 
-        protected CashReceiptBaseSample(StreamWriter tracer) : base(tracer) { }
+        protected CashReceiptBaseSample(DateTime financialYearStart, StreamWriter tracer) : base(tracer)
+        {
+            CashReceiptEntryDate = financialYearStart.AddMonths(3);
+        }
 
         /// <summary>
         /// Prepares environment to run sample: checks existing of necessary entities. If possible, missed entities will be created. Otherwise, error will be raised.

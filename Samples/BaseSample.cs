@@ -97,7 +97,7 @@ namespace BigRedCloud.Api.Samples
 
         protected void CreateCustomers(int count)
         {
-            BatchItemProcessResult[] batchResult = CreateItems(count, i => SampleDtoGenerator.GenerateCustomer(), ApiClientProvider.Default.Customers.ProcessBatch);
+            BatchItemProcessResult<CustomerDto>[] batchResult = CreateItems(count, i => SampleDtoGenerator.GenerateCustomer(), ApiClientProvider.Default.Customers.ProcessBatch);
 
             Tracer.WriteLine("Batch of {0} Customers was created. Ids of created items: {1}.",
                 count,
@@ -108,7 +108,7 @@ namespace BigRedCloud.Api.Samples
 
         protected void CreateProducts(int count)
         {
-            BatchItemProcessResult[] batchResult = CreateItems(count, i => SampleDtoGenerator.GenerateProduct(), ApiClientProvider.Default.Products.ProcessBatch);
+            BatchItemProcessResult<ProductDto>[] batchResult = CreateItems(count, i => SampleDtoGenerator.GenerateProduct(), ApiClientProvider.Default.Products.ProcessBatch);
 
             Tracer.WriteLine("Batch of {0} Products was created. Ids of created items: {1}.",
                 count,
@@ -117,7 +117,7 @@ namespace BigRedCloud.Api.Samples
             Tracer.WriteLine();
         }
 
-        protected BatchItemProcessResult[] CreateItems<TApiDto>(int count, Func<int, TApiDto> itemGenerator, Func<BatchItem<TApiDto>[], BatchItemProcessResult[]> batchProcessor)
+        protected BatchItemProcessResult<TApiDto>[] CreateItems<TApiDto>(int count, Func<int, TApiDto> itemGenerator, Func<BatchItem<TApiDto>[], BatchItemProcessResult<TApiDto>[]> batchProcessor)
         {
             List<BatchItem<TApiDto>> itemsBatch = new List<BatchItem<TApiDto>>(count);
             for (int i = 0; i < count; i++)
@@ -133,20 +133,20 @@ namespace BigRedCloud.Api.Samples
             return ProcessBatch(itemsBatch.ToArray(), batchProcessor);
         }
 
-        protected BatchItemProcessResult[] ProcessBatch<TApiDto>(BatchItem<TApiDto>[] itemsBatch, Func<BatchItem<TApiDto>[], BatchItemProcessResult[]> batchProcessor)
+        protected BatchItemProcessResult<TApiDto>[] ProcessBatch<TApiDto>(BatchItem<TApiDto>[] itemsBatch, Func<BatchItem<TApiDto>[], BatchItemProcessResult<TApiDto>[]> batchProcessor)
         {
-            BatchItemProcessResult[] batchResult = batchProcessor.Invoke(itemsBatch);
+            BatchItemProcessResult<TApiDto>[] batchResult = batchProcessor.Invoke(itemsBatch);
             ValidateBatchResult(batchResult);
 
             return batchResult;
         }
 
-        protected void ValidateBatchResult(BatchItemProcessResult[] batchResult)
+        protected void ValidateBatchResult<TApiDto>(BatchItemProcessResult<TApiDto>[] batchResult)
         {
             StringBuilder resultMessage = new StringBuilder();
             for (int i = 0; i < batchResult.Length; i++)
             {
-                BatchItemProcessResult itemResult = batchResult[i];
+                BatchItemProcessResult<TApiDto> itemResult = batchResult[i];
                 if (!IsSuccessStatusCode(itemResult.code))
                 {
                     string itemMessage = String.Format(
@@ -162,11 +162,11 @@ namespace BigRedCloud.Api.Samples
             }
         }
 
-        protected void PrintBatchResult(BatchItemProcessResult[] batchResult, string entityName)
+        protected void PrintBatchResult<TApiDto>(BatchItemProcessResult<TApiDto>[] batchResult, string entityName)
         {
             for (var i = 0; i < batchResult.Length; i++)
             {
-                BatchItemProcessResult itemResult = batchResult[i];
+                BatchItemProcessResult<TApiDto> itemResult = batchResult[i];
                 string messageTemplate = "{0} #{1}: Status code = {2}.";
                 if (!IsSuccessStatusCode(itemResult.code))
                 {
