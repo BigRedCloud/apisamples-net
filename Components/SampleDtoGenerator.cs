@@ -53,7 +53,7 @@ namespace BigRedCloud.Api.Samples.Components
                         quantity = 2,
                         vatRateId = parameters.VatRates[20].id,
                         tranNotes = new[] { "tn_2_1", "tn_2_2" },
-                        amountNet = 30m,
+                        amountNet = 40m,
                         acEntries = new AcEntryDto[]
                         {
                             new AcEntryDto
